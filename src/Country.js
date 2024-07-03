@@ -19,7 +19,7 @@
 
 
 import React, { useState } from 'react';
-import './App.css';
+import './components/country.css';
 
 function App() {
   const [country, setCountry] = useState('');
