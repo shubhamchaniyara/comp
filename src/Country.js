@@ -6,13 +6,14 @@ function App() {
   const [province, setProvince] = useState('');
   const [universities, setUniversities] = useState([]);
   const [provinces, setProvinces] = useState([]);
+  const [alluniversities, setalluniversities]= useState([]);
 
   const searchUniversities = async () => {
     const response = await fetch('https://raw.githubusercontent.com/Hipo/university-domains-list/master/world_universities_and_domains.json');
     const data = await response.json();
     const filtered = data.filter(university => university.country.toLowerCase() === country.toLowerCase());
     setUniversities(filtered);
-
+    setalluniversities(filtered);
    
     const uniqueProvinces = [...new Set(filtered.map(university => university['state-province']).filter(Boolean))];
     setProvinces(uniqueProvinces);
@@ -20,7 +21,7 @@ function App() {
   };
 
   const filterByProvince = () => {
-    const filtered = universities.filter(university => university['state-province'] === province);
+    const filtered = alluniversities.filter(university => university['state-province'] === province);
     setUniversities(filtered);
   };
 
@@ -28,7 +29,11 @@ function App() {
     if (province) {
       filterByProvince();
     }
+    else{
+      setUniversities(alluniversities);
+    }
   }, [province]);
+  
 
   return (
     <div className="App">
